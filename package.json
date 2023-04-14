@@ -1,0 +1,26 @@
+{
+  "name": "agile-solutions_task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"tsc -w\" \"nodemon ./dist/app.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/masudmirza/Agile-Solutions-Task.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/masudmirza/Agile-Solutions-Task/issues"
+  },
+  "homepage": "https://github.com/masudmirza/Agile-Solutions-Task#readme",
+  "dependencies": {
+    "@types/node": "^18.15.11",
+    "concurrently": "^8.0.1",
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.1"
+  }
+}
