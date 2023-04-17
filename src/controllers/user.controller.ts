@@ -179,17 +179,17 @@ export default class UserController {
         try {
             const userId = req.params.id;                           
 
-            const user = await User.findById(userId, '-password')
+            const existUser = await User.findById(userId, '-password')
             .populate({
                 path: 'roleId',
                 select: '-users -permissions',
             });            
 
-            if (!user) {
+            if (!existUser) {
                 return res.status(404).json({ message: ErrorCode.USER_NOT_FOUNDED });
             }
             
-            const rolePermissions = await RolePermission.find({ roleId: user.roleId })
+            const rolePermissions = await RolePermission.find({ roleId: existUser.roleId })
             
             const permissionIds = rolePermissions.map((rp) => rp.permissionId);
 
@@ -197,9 +197,9 @@ export default class UserController {
                 _id: { $in: permissionIds }
             }).select('-roles');
 
-            const result = { ...user.toObject(), permissions };            
+            const user = { ...existUser.toObject(), permissions };            
 
-            res.status(200).json(result);
+            res.status(200).json(user);
         } catch (error) {            
             return res.status(500).json({ message: ErrorCode.INTERNAL_SERVER_ERROR });
         }
@@ -207,8 +207,8 @@ export default class UserController {
 
     async getAllUsers (req: Request, res: Response) {
         try {
-            const page = parseInt(req.query.page as string, 10) || 1;
-            const limit = parseInt(req.query.limit as string, 10) || 10;
+            const page = parseInt(req.query.page as string) || 1;
+            const limit = parseInt(req.query.limit as string) || 10;
 
             const users = await User.find()
                 .select('-password')

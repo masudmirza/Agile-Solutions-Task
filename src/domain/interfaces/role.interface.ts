@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { RoleName } from '../domain/enums/role.enum';
+import { RoleName } from '../enums/role.enum';
 
 export interface IRole extends Document {
     name: RoleName;

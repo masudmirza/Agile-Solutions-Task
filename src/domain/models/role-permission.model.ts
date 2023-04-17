@@ -1,5 +1,5 @@
 import mongoose, { Model, Schema } from 'mongoose';
-import { IRolePermission } from '../../interfaces/role-permission.interface';
+import { IRolePermission } from '../interfaces/role-permission.interface';
 
 const rolePermissionSchema: Schema<IRolePermission> = new mongoose.Schema({
     roleId: {

@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { PermissionName } from '../domain/enums/permission.enum';
+import { PermissionName } from '../enums/permission.enum';
 
 export interface IPermission extends Document {
     name: PermissionName;

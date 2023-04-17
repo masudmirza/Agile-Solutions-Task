@@ -1,5 +1,5 @@
 import mongoose, { Model, Schema } from 'mongoose';
-import { IRole } from '../../interfaces/role.interface';
+import { IRole } from '../interfaces/role.interface';
 import { RoleName } from '../enums/role.enum';
 
 const roleSchema: Schema<IRole> = new mongoose.Schema({

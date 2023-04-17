@@ -1,5 +1,5 @@
 import mongoose, { Model, Schema } from 'mongoose';
-import { IPermission } from '../../interfaces/permission.interface';
+import { IPermission } from '../interfaces/permission.interface';
 import { PermissionName } from '../enums/permission.enum';
 
 const permissionSchema: Schema<IPermission> = new mongoose.Schema({
