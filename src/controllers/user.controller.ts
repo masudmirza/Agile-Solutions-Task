@@ -128,13 +128,12 @@ export default class UserController {
     async updateUser (req: Request, res: Response) {
         try {
             const userId = req.params.id;
+            const { firstName, lastName, role } = req.body;
 
             const existUser = await User.findById(userId);
             if (!existUser) {
                 return res.status(404).json({ message: ErrorCode.USER_NOT_FOUNDED });
             }
-
-            const { firstName, lastName, role } = req.body;
 
             const errors = validationResult(req)
             if (!errors.isEmpty()) {
