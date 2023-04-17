@@ -86,52 +86,61 @@ const rolePermissions = [
 ];
 
 export default async function seed() {
-    try {  
+    try {
       const newRoles = [];
-
+      const newPermissions = [];
+      const newRolePermissions = [];
+  
       for (const role of roles) {
         const existRole = await Role.findOne({ name: role.name });
-
-        if (existRole) continue;
-
-        newRoles.push(role);
+        if (existRole) {
+          role._id = existRole._id;
+        } else {
+          const newRole = new Role(role);
+          await newRole.save();
+          newRoles.push(newRole);
+        }
       }
-      
-      
-      if (newRoles.length) {
-        await Role.insertMany(newRoles);
-      }
-
-      const newPermissions = [];
-
+  
       for (const permission of permissions) {
         const existPermission = await Permission.findOne({ name: permission.name });
-
-        if (existPermission) continue;
-
-        newPermissions.push(permission);
+        if (existPermission) {
+          permission._id = existPermission._id;
+        } else {
+          const newPermission = new Permission(permission);
+          await newPermission.save();
+          newPermissions.push(newPermission);
+        }
       }
-
-      if (newPermissions.length) {
-        await Permission.insertMany(newPermissions);
-      }
-
-      const newRolePermissions = [];
-
+  
       for (const rp of rolePermissions) {
-        const existRolePermission = await RolePermission.findOne({ roleId: rp.roleId, permissionId: rp.permissionId });
-
-        if (existRolePermission) continue;
-
-        newRolePermissions.push(rp);
+        const existRolePermission = await RolePermission.findOne({
+          roleId: rp.roleId,
+          permissionId: rp.permissionId,
+        });
+  
+        if (existRolePermission) {
+          continue;
+        }
+  
+        const existRole = await Role.findById(rp.roleId);
+        const existPermission = await Permission.findById(rp.permissionId);
+  
+        if (!existRole || !existPermission) {
+          continue;
+        }
+  
+        const newRolePermission = new RolePermission({
+          roleId: existRole._id,
+          permissionId: existPermission._id,
+        });
+  
+        await newRolePermission.save();
+        newRolePermissions.push(newRolePermission);
       }
-
-      if (newRolePermissions.length) {
-        await RolePermission.insertMany(newRolePermissions);
-      }
-
-      console.log('Seeding completed successfully.');
-    } catch (error) {
-      console.error(error);
-    }
+  
+      console.log('Seeding completed successfully.');      
+  } catch (error) {
+    console.error(error);
+  }
 }

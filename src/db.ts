@@ -11,7 +11,7 @@ export default async function connectToDB() {
         useNewUrlParser: true,
         useUnifiedTopology: true
       } as ConnectOptions);
-      console.log('Connected to Database');
+      console.log('Connected to the Database');
     } catch (error) {
       console.error(error);
     }

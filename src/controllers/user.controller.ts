@@ -196,7 +196,7 @@ export default class UserController {
 
             const permissions = await Permission.find({
                 _id: { $in: permissionIds }
-            })
+            }).select('-roles');
 
             const result = { ...user.toObject(), permissions };            
 
